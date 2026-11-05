@@ -46,9 +46,11 @@ description: |
 
   ## Dates and time
 
-  - Store timestamps in UTC, and derive the local date with the viewer's or the channel's timezone.
-  - Linear schedules often use a broadcast day that does not start at midnight. Check the
-    organisation's convention and model it explicitly.
+  - Store timestamps in UTC (GMT+00:00, no daylight saving), and derive the local date with the
+    viewer's or the channel's timezone (UK: GMT in winter, BST = GMT+01:00 in summer).
+  - Linear schedules often use a broadcast day that does not start at midnight (for UK TV, BARB's
+    day runs from 06:00 to 06:00 local time, so 06:00 GMT in winter and 05:00 GMT in summer). Check
+    the organisation's convention and model it explicitly.
 
   ## Tests
 
