@@ -1,0 +1,58 @@
+version: datasets/v0.3
+title: "Media and entertainment: industry overview"
+questions: What does a media and entertainment organisation's data look like, and where does it come from?
+description: |
+  Industry context for this workspace, for the people and AI assistants working in it. It has no
+  query: it is a briefing to read before modelling or analysing this organisation's data.
+
+  ## Segments
+
+  Media and entertainment covers organisations whose product is content and the audience it
+  attracts. The segments differ in how they earn money and which entities matter most:
+
+  - **Streaming and video on demand:** subscription (SVOD), ad-supported (AVOD), free ad-supported
+    channels (FAST) and pay-per-title (TVOD). Subscriptions, plays, watch time and ad impressions
+    drive the data.
+  - **Broadcast TV and radio:** linear schedules, programmes, spots and breaks, and panel-based
+    audience measurement. Airtime sales and ratings drive the data.
+  - **Publishing and news:** articles, page views, paywalls, digital subscriptions and display
+    advertising.
+  - **Music and audio:** releases, tracks, streams reported by digital service providers (DSPs),
+    royalties, podcasts and live performance.
+  - **Film and TV production and distribution:** titles, rights by territory and window, licence
+    deals, box office and production costs.
+  - **Games:** players, sessions, in-app purchases and advertising.
+  - **Live events and ticketing:** events, tickets, attendance and secondary sales.
+
+  ## Typical source systems
+
+  | System | Examples | What it holds |
+  |---|---|---|
+  | Ad server and SSP | Google Ad Manager, FreeWheel, Magnite, SpringServe | Orders, line items, creatives, impressions, clicks, ad revenue |
+  | Subscription billing | Zuora, Recurly, Chargebee, Stripe Billing, Piano | Subscriptions, plans, invoices, payments, cancellations |
+  | App stores | Apple App Store Connect, Google Play Console | In-app subscriptions and purchases, proceeds net of store commission |
+  | Video platform and player analytics | Brightcove, JW Player, Kaltura, Mux, Conviva | Assets, plays, watch time, streaming quality |
+  | Content metadata and rights | Rightsline, FilmTrack, Gracenote, an in-house media asset manager | Titles, episodes, identifiers, rights, territories, windows |
+  | Audience measurement | BARB, Nielsen, Comscore, RAJAR | Panel-based ratings and reach |
+  | Music distribution and royalties | DSP sales reports via distributors such as FUGA or The Orchard, Curve | Streams and sales by track and territory, royalty statements |
+  | Product analytics and CRM | Segment, Amplitude, Snowplow, Google Analytics, Braze | Sign-up funnels, app events, messaging |
+  | Ticketing | Ticketmaster, See Tickets, Eventbrite | Events, orders, tickets, attendance |
+  | Accounting / ERP | NetSuite, SAP, Sage | General ledger, content cost amortisation, royalty accruals |
+
+  ## What makes the data different
+
+  - **Huge event volumes.** Players send heartbeats every few seconds. Sessionise and aggregate early,
+    and keep raw events only as long as they are needed.
+  - **A "view" is a definition, not a fact.** Platforms, advertisers and rights holders each count a
+    play, stream or view differently (a minimum duration, a share of the asset watched). Name which
+    definition each figure uses.
+  - **Revenue arrives late and net.** DSP and distributor statements arrive months after the usage
+    they pay for, and app store proceeds are net of commission and in many currencies.
+  - **Rights gate everything.** What can be shown, where and when depends on rights by title,
+    territory, platform and window, and deal terms are confidential.
+  - **The data is personal.** Viewing histories, children's accounts and advertising identifiers need
+    care. See *Media & entertainment: handling the data*.
+
+  Related datasets: *data model*, *metrics*, *modelling it in dbt*, *handling the data*.
+
+  #media-entertainment #organisation-context

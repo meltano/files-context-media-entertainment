@@ -1,0 +1,42 @@
+version: datasets/v0.3
+title: "Media and entertainment: data model"
+questions: What are the core entities of media and entertainment data, and at what grain should each be modelled?
+description: |
+  The entities most media and entertainment data reduces to, with the grain and key of each. Use it
+  to map raw source tables onto a consistent model. Names are suggestions; keep the organisation's
+  own terms where they already exist.
+
+  | Entity | Grain (one row per…) | Notes |
+  |---|---|---|
+  | `account` (customer) | billing account | The paying party. One account can have several profiles, some of them children's |
+  | `profile` | viewer profile | Who watched. Flag kids' profiles: they change what can be stored and targeted |
+  | `plan` (offer) | plan version | Price, currency, billing period, ad tier or ad-free, trial length. Version, do not overwrite |
+  | `subscription` | subscription | Account, plan, channel (web, App Store, Google Play, partner bundle), start, end and status |
+  | `subscription_event` | state change | Trial start, conversion, renewal, upgrade, downgrade, pause, cancel, payment failure, win-back |
+  | `invoice` / `payment` | invoice or payment | From billing or the app store. App store rows carry proceeds after commission |
+  | `title` | content item | Hierarchy: series → season → episode, or artist → release → track. Carry industry identifiers (EIDR, ISAN, ISRC, UPC, ISWC) |
+  | `asset` | rendition or file | The playable version of a title: language, audio and subtitle tracks, duration |
+  | `rights_window` | title × territory × platform × window | Start and end dates, exclusivity, licence type (SVOD, AVOD, TVOD, free TV) |
+  | `playback_session` | play | Profile, asset, device, start time, seconds watched, completion. Built from heartbeats |
+  | `playback_event` | heartbeat or player event | Raw player events. Very high volume; aggregate early |
+  | `ad_order` / `line_item` | line item | Advertiser, campaign, booked impressions, rate (CPM or flat), flight dates |
+  | `ad_delivery_daily` | line item × day × placement | Impressions, clicks, completions, revenue. Ad servers report aggregates, not single impressions |
+  | `schedule_slot` | broadcast slot | Channel, programme, start and end, break positions. For linear TV and radio |
+  | `royalty_statement_line` | statement line | Usage period, statement period, DSP, territory, track, units, gross and net amounts, currency |
+
+  ## Relationships
+
+  - An **account** has one or more **profiles** and one or more **subscriptions** over time.
+  - A **subscription** is a sequence of **subscription events**, and produces **invoices** or app
+    store transactions.
+  - A **title** has one or more **assets**, and **rights windows** say where and when it may be shown.
+  - A **profile** has many **playback sessions** of **assets**, each built from **playback events**.
+  - A **line item** delivers **ad impressions** into sessions, pages or **schedule slots**.
+
+  ## Status and history
+
+  Subscription status, plan price, catalogue availability and rights change over time, and reports
+  ask what was true at a date: how many paying subscribers on the last day of the month, which titles
+  were available in a territory that week. Keep the history, not only the latest state.
+
+  #media-entertainment #organisation-context

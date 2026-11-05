@@ -1,0 +1,67 @@
+version: datasets/v0.3
+title: "Media and entertainment: modelling it in dbt"
+questions: How should raw media and entertainment data be modelled in dbt so that it is consistent?
+description: |
+  Conventions for building dbt models on raw media and entertainment data. They apply on top of the
+  workspace's usual dbt layout: staging, then intermediate, then marts.
+
+  ## Playback events
+
+  - **Sessionise once.** Build `playback_session` from heartbeats in an intermediate model: group by
+    session ID (or by profile, asset and a gap of inactivity when there is no ID), and derive start,
+    end, seconds watched and the furthest position reached.
+  - **Deduplicate.** Players retry and SDKs resend. Deduplicate on event ID, or on session, event type
+    and timestamp, in staging.
+  - **Model incrementally with a look-back window.** Mobile and TV apps send events late, after a
+    device comes back online. Reprocess a few days on each run.
+  - **Put view thresholds in one place.** Keep the definition of a start, a view and a completion in a
+    macro or seed, not repeated in every model.
+
+  ## Subscriptions
+
+  - Rebuild subscription state from **events**, not from the latest status column: a subscription can
+    trial, convert, lapse and come back.
+  - **Unify billing channels.** Web billing, App Store, Google Play and partner bundles each report
+    differently. Map them to one `subscription_event` model with a channel column.
+  - Snapshot **paying subscribers per day** (`fct_subscriptions_daily`) so period-end counts and churn
+    do not depend on late updates.
+  - Keep **gross price, tax, store commission and net proceeds** as separate columns, each with its
+    currency.
+
+  ## Content and rights
+
+  - Model the title hierarchy (series → season → episode, artist → release → track) as a dimension
+    with the parent keys flattened onto each row.
+  - Carry the industry identifiers (EIDR, ISAN, ISRC, UPC) as well as internal IDs, since partners
+    report against them. Expect the same title to have several internal IDs across systems.
+  - Model rights as **date ranges per territory and platform**, and test that windows for the same
+    title, territory and licence type do not overlap unless the source allows it.
+
+  ## Royalties and ad revenue
+
+  - Keep both the **usage period** and the **statement period** on royalty lines. Statements restate
+    earlier periods; load them additively and never overwrite a period.
+  - Ad server, SSP and invoiced figures differ. Model each as its own source and reconcile them,
+    rather than picking one silently.
+
+  ## Dates and time
+
+  - Store timestamps in UTC, and derive the local date with the viewer's or the channel's timezone.
+  - Linear schedules often use a broadcast day that does not start at midnight. Check the
+    organisation's convention and model it explicitly.
+
+  ## Tests
+
+  - `unique` and `not_null` on session and event keys; **accepted values** on event types, channels,
+    territories (ISO 3166) and currencies (ISO 4217).
+  - Seconds watched per session is not negative and not longer than the session itself.
+  - Daily subscriber movement reconciles: opening + gross adds − losses = closing.
+  - **Freshness** on player events and billing sources.
+
+  ## Sensitive columns
+
+  Tag personal columns, viewing histories and advertising identifiers in the model YAML (for
+  example `meta: {pii: true}`), and keep children's profiles out of marketing marts. See
+  *Media & entertainment: handling the data*.
+
+  #media-entertainment #organisation-context

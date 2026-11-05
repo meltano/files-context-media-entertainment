@@ -1,0 +1,62 @@
+version: datasets/v0.3
+title: "Media and entertainment: key metrics"
+questions: Which metrics does a media and entertainment organisation run on, and how is each calculated?
+description: |
+  Standard definitions of the metrics media and entertainment organisations report. Confirm each
+  one with the finance, content or ad sales team before building it: organisations differ on what
+  counts as a subscriber, a view and revenue (gross or net of commission).
+
+  ## Subscriptions
+
+  | Metric | Definition |
+  |---|---|
+  | Paying subscribers | Subscriptions in a paid state at the period end. Say whether trials, paused and partner-bundled subscriptions count |
+  | Gross adds / net adds | New paying subscribers in the period; gross adds less losses |
+  | Churn rate | Subscribers lost in the period ÷ subscribers at the start, usually monthly. Split voluntary (cancelled) from involuntary (payment failed) |
+  | Trial conversion | Trials that became paid ÷ trials that ended in the period |
+  | ARPU | Subscription revenue ÷ average paying subscribers, per month. Say gross or net of app store commission and tax |
+  | Monthly recurring revenue (MRR) | Normalised monthly value of active paid subscriptions |
+  | Lifetime value (LTV) | ARPU × gross margin ÷ monthly churn rate, or measured from cohorts |
+
+  ## Engagement
+
+  | Metric | Definition |
+  |---|---|
+  | Daily / monthly active users (DAU, MAU) | Distinct profiles or accounts with a qualifying play or visit in the day or month. Define "qualifying" |
+  | Stickiness | Average DAU ÷ MAU |
+  | Watch time (hours streamed) | Sum of seconds watched ÷ 3,600. Exclude buffering and paused time |
+  | Starts / views | Playback sessions passing the organisation's view threshold. Name the threshold |
+  | Completion rate | Sessions reaching the end (or the credits marker) ÷ starts |
+  | Average time per user | Watch time ÷ active users in the period |
+  | Cost per hour viewed | Content cost (amortisation or licence fee) ÷ hours viewed, by title |
+
+  ## Advertising
+
+  | Metric | Definition |
+  |---|---|
+  | Impressions | Ads served (or rendered, for viewable counts) as reported by the ad server |
+  | Fill rate | Impressions ÷ ad requests (or available ad slots) |
+  | Sell-through rate | Sold impressions ÷ available inventory |
+  | CPM | Ad revenue ÷ impressions × 1,000. eCPM uses all impressions, including unsold or house ads |
+  | Video completion rate (VCR) | Ads watched to the end ÷ ad starts |
+  | Viewability | Viewable impressions ÷ measured impressions, by an industry standard (for example the MRC) |
+
+  ## Streaming quality
+
+  | Metric | Definition |
+  |---|---|
+  | Video start failure rate | Attempts that never played ÷ play attempts |
+  | Rebuffering ratio | Time spent rebuffering ÷ (watch time + rebuffering time) |
+  | Video start time | Median (or 95th percentile) time from pressing play to the first frame |
+
+  ## Music, linear and live
+
+  | Metric | Definition |
+  |---|---|
+  | Streams | Plays a DSP reports as royalty-bearing (Spotify, for example, counts a stream after 30 seconds) |
+  | Per-stream rate | Net royalty ÷ streams, by DSP, territory and period. A result, not a fixed price |
+  | Average audience / reach | From audience measurement: average viewers over a slot; distinct viewers reached for a minimum time |
+  | Share | Audience of a channel ÷ total audience watching in the same slot |
+  | Sell-through (events) | Tickets sold ÷ capacity |
+
+  #media-entertainment #organisation-context

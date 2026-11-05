@@ -1,0 +1,50 @@
+version: datasets/v0.3
+title: "Media and entertainment: handling the data"
+questions: What care does media and entertainment data need in the warehouse?
+description: |
+  Media and entertainment data includes viewers' personal data and habits, children's data and
+  confidential commercial terms. These are general practices for a warehouse holding it. They are
+  not legal or compliance advice: the organisation's legal and data protection teams decide what
+  applies to it.
+
+  ## Classify the data
+
+  | Class | Examples | Handling |
+  |---|---|---|
+  | Card data | Full card number, CVV | **Never load it into the warehouse.** Keep only the billing provider's token. PCI DSS applies to card payments |
+  | Children's data | Kids' profiles, age, viewing on children's profiles | Keep it apart, collect the minimum, and never use it for profiling or targeted advertising |
+  | Viewing and listening history | Titles watched, searches, listening history | Personal data that can reveal beliefs, health or sexuality. Restrict it and aggregate where possible |
+  | Advertising identifiers and consent | Device advertising IDs, cookies, consent strings | Use only within the consent given, and keep the consent record next to the data |
+  | Personal data | Name, email, address, IP address, device IDs | Restrict access, mask in non-production and in marts that do not need it |
+  | Commercial terms | Licence fees, rights deals, talent pay, royalty rates | Confidential under contract. Restrict to the teams named in the deal |
+  | Unreleased content metadata | Release dates, titles and artwork under embargo | Restrict until release |
+
+  ## Practices
+
+  - **Least privilege.** Separate raw, staging and mart schemas, and grant raw schemas only to the
+    pipelines and the people who maintain them.
+  - **Aggregate early.** Most reporting needs watch time by title, day and territory, not by person.
+    Keep person-level events only as long as the purpose needs them.
+  - **Respect consent in models.** Filter on the consent recorded at the time of the event before
+    data reaches audience or advertising marts.
+  - **No production data in development** without masking.
+  - **Data subject requests.** Under GDPR and UK GDPR a viewer can ask for their data or for its
+    erasure, so know where each account's and profile's data lives, including derived audiences.
+  - **Rights and territories.** Contracts may restrict where content data and partner reports can be
+    stored or shared. Check before sending them to a new system.
+
+  ## Regulators and rules to be aware of
+
+  Which apply depends on the organisation's country and activities. Common ones:
+
+  - **UK:** UK GDPR, the Privacy and Electronic Communications Regulations (PECR) for cookies and
+    marketing, the ICO's Age Appropriate Design Code (Children's Code), Ofcom for broadcasting and
+    on-demand services.
+  - **EU:** GDPR, the ePrivacy Directive, the Audiovisual Media Services Directive.
+  - **US:** COPPA for children under 13, the Video Privacy Protection Act (VPPA) for video viewing
+    records, state privacy laws such as the CCPA/CPRA.
+  - **Advertising:** the IAB Transparency and Consent Framework, and Apple's App Tracking
+    Transparency for iOS advertising identifiers.
+  - **Card payments everywhere:** PCI DSS.
+
+  #media-entertainment #organisation-context
